@@ -86,13 +86,18 @@ func (as *apiService) NewOrder(or NewOrderRequest) (*ProcessedOrder, error) {
 }
 
 func (as *apiService) NewOrderTest(or NewOrderRequest) error {
+	precision := 10
+	if or.PricePrecision != 0 {
+		precision = or.PricePrecision
+	}
+
 	params := make(map[string]string)
 	params["symbol"] = or.Symbol
 	params["side"] = string(or.Side)
 	params["type"] = string(or.Type)
 	params["timeInForce"] = string(or.TimeInForce)
 	params["quantity"] = strconv.FormatFloat(or.Quantity, 'f', 10, 64)
-	params["price"] = strconv.FormatFloat(or.Price, 'f', 10, 64)
+	params["price"] = strconv.FormatFloat(or.Price, 'f', precision, 64)
 	params["timestamp"] = strconv.FormatInt(unixMillis(or.Timestamp), 10)
 	if or.NewClientOrderID != "" {
 		params["newClientOrderId"] = or.NewClientOrderID
