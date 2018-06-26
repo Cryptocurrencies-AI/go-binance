@@ -3,7 +3,6 @@ package binance
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"strconv"
 
 	"github.com/pkg/errors"
@@ -85,7 +84,6 @@ func (as *apiService) NewOrder(or NewOrderRequest) (*ProcessedOrder, error) {
 		return nil, as.handleError(textRes)
 	}
 
-	log.Println(string(textRes))
 	rawOrder := rawExecutedOrderResponse{}
 	if err := json.Unmarshal(textRes, &rawOrder); err != nil {
 		return nil, errors.Wrap(err, "rawOrder unmarshal failed")
