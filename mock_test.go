@@ -3,8 +3,8 @@ package binance_test
 import (
 	"time"
 
-	"github.com/betazoid/go-binance"
 	"github.com/stretchr/testify/mock"
+	"github.com/theMattCode/go-binance"
 )
 
 type ServiceMock struct {
