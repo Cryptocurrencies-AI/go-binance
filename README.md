@@ -5,8 +5,8 @@ To read full documentation, specs and find out which request params are required
 
 ## Project status
 
-[![Build Status](https://travis-ci.com/Betazoid/go-binance.svg?branch=master)](https://travis-ci.com/Betazoid/go-binance)
-[![codecov](https://codecov.io/gh/Betazoid/go-binance/branch/master/graph/badge.svg)](https://codecov.io/gh/Betazoid/go-binance)
+[![Build Status](https://travis-ci.com/theMattCode/go-binance.svg?branch=master)](https://travis-ci.com/theMattCode/go-binance)
+[![codecov](https://codecov.io/gh/theMattCode/go-binance/branch/master/graph/badge.svg)](https://codecov.io/gh/theMattCode/go-binance)
 
 ## Getting started
 

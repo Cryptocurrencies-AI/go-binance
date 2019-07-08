@@ -1,9 +1,9 @@
-go_import_path: github.com/betazoid/go-binance
+go_import_path: github.com/theMattCode/go-binance
 
 language: go
 
 go:
-  - "1.10.x"
+  - "1.12.x"
 
 script:
   - go test -v ./... -race -coverprofile=coverage.txt -covermode=atomic
