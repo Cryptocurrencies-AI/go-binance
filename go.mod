@@ -3,7 +3,6 @@ module github.com/theMattCode/go-binance
 go 1.12
 
 require (
-	github.com/betazoid/go-binance v1.0.0
 	github.com/davecgh/go-spew v1.1.0
 	github.com/go-kit/kit v0.6.0
 	github.com/go-logfmt/logfmt v0.3.0
