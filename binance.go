@@ -334,6 +334,7 @@ type NewOrderRequest struct {
 	TimeInForce      TimeInForce
 	Quantity         float64
 	Price            float64
+	PricePrecision   int
 	NewClientOrderID string
 	StopPrice        float64
 	IcebergQty       float64
