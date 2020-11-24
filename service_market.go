@@ -289,8 +289,8 @@ func (as *apiService) AggTrades(atr AggTradesRequest) ([]*AggTrade, error) {
 }
 
 func (as *apiService) MarkPriceAllStr() (string, error) {
-  out := "{}"
-  return out
+	out := "{}"
+	return out
 }
 
 func (as *apiService) Klines(kr KlinesRequest) ([]*Kline, error) {

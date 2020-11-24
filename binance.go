@@ -26,8 +26,8 @@ type Binance interface {
 	Trades(req TradesRequest) ([]*PublicTrade, error)
 	// AggTrades returns compressed/aggregate list of trades.
 	AggTrades(atr AggTradesRequest) ([]*AggTrade, error)
-  // MarkPriceAllStr returns string with JSON encoded prices.
-  MarkPriceAllStr() (string, error)
+	// MarkPriceAllStr returns string with JSON encoded prices.
+	MarkPriceAllStr() (string, error)
 	// Klines returns klines/candlestick data.
 	Klines(kr KlinesRequest) ([]*Kline, error)
 	// Tickers24 returns all 24hr price change statistics.
@@ -72,7 +72,7 @@ type Binance interface {
 
 	Tickers24Websocket() (chan *Tickers24Event, chan struct{}, error)
 	DepthWebsocket(dwr DepthWebsocketRequest) (chan *DepthEvent, chan struct{}, error)
-  MarkPriceAllStrWebsocket() (chan *MarkPriceAllStrEvent, chan struct{}, error)
+	MarkPriceAllStrWebsocket() (chan *MarkPriceAllStrEvent, chan struct{}, error)
 	KlineWebsocket(kwr KlineWebsocketRequest) (chan *KlineEvent, chan struct{}, error)
 	TradeWebsocket(twr TradeWebsocketRequest) (chan *AggTradeEvent, chan struct{}, error)
 	UserDataWebsocket(udwr UserDataWebsocketRequest) (chan *AccountEvent, chan struct{}, error)
@@ -124,7 +124,7 @@ type Symbol struct {
 type RateLimit struct {
 	Type     string `json:"rateLimitType"`
 	Interval string `json:"interval"`
-	Limit    int64    `json:"limit"`
+	Limit    int64  `json:"limit"`
 }
 
 type ExchangeInfo struct {
@@ -226,8 +226,7 @@ func (b *binance) AggTrades(atr AggTradesRequest) ([]*AggTrade, error) {
 }
 
 type MarkPriceAllStrEvent struct {
-  WSEvent
-  Interval Interval
+	Data string
 }
 
 // KlinesRequest represents Klines request data.
@@ -279,7 +278,7 @@ type KlineEvent struct {
 
 // MarkPriceAllStr returns string with JSON encoded prices.
 func (b *binance) MarkPriceAllStr() (string, error) {
-  return b.Service.MarkPriceAllStr()
+	return b.Service.MarkPriceAllStr()
 }
 
 // Klines returns klines/candlestick data.

@@ -331,6 +331,39 @@ func (as *apiService) DepthWebsocket(dwr DepthWebsocketRequest) (chan *DepthEven
 }
 
 func (as *apiService) MarkPriceAllStrWebsocket() (chan *MarkPriceAllStrEvent, chan struct{}, error) {
+	url := fmt.Sprintf("wss://stream.binance.com:9443/ws/!markPrice@arr@1s")
+	c, _, err := websocket.DefaultDialer.Dial(url, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	done := make(chan struct{})
+	mpasech := make(chan *MarkPriceAllStrEvent)
+
+	go func() {
+		defer c.Close()
+		defer close(done)
+		for {
+			select {
+			case <-as.Ctx.Done():
+				level.Info(as.Logger).Log("closing reader")
+				return
+			default:
+				_, message, err := c.ReadMessage() // guess message is bytes, maybe ReadJSON here?
+				if err != nil {
+					level.Error(as.Logger).Log("wsRead", err)
+					return
+				}
+				mpase := &MarkPriceAllStrEvent{
+					Data: message,
+				}
+				mpasech <- mpase
+			}
+		}
+	}()
+
+	go as.exitHandler(c, done)
+	return mpasech, done, nil
 }
 
 func (as *apiService) KlineWebsocket(kwr KlineWebsocketRequest) (chan *KlineEvent, chan struct{}, error) {
