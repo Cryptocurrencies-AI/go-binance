@@ -330,7 +330,7 @@ func (as *apiService) DepthWebsocket(dwr DepthWebsocketRequest) (chan *DepthEven
 	return dech, done, nil
 }
 
-func (as *apiService) MarkPriceAll() (chan *MarkPriceAllEvent, chan struct{}, error) {
+func (as *apiService) MarkPriceAllStrWebsocket() (chan *MarkPriceAllStrEvent, chan struct{}, error) {
 }
 
 func (as *apiService) KlineWebsocket(kwr KlineWebsocketRequest) (chan *KlineEvent, chan struct{}, error) {
