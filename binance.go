@@ -73,7 +73,7 @@ type Binance interface {
 	Tickers24Websocket() (chan *Tickers24Event, chan struct{}, error)
 	DepthWebsocket(dwr DepthWebsocketRequest) (chan *DepthEvent, chan struct{}, error)
 	MarkPriceAllStrWebsocket() (chan *MarkPriceAllStrEvent, chan struct{}, error)
-	SpreadAllWebsocket() (chan *MarkPriceAllStrEvent, chan struct{}, error)
+	SpreadAllWebsocket() (chan *SpreadAllEvent, chan struct{}, error)
 	KlineWebsocket(kwr KlineWebsocketRequest) (chan *KlineEvent, chan struct{}, error)
 	TradeWebsocket(twr TradeWebsocketRequest) (chan *AggTradeEvent, chan struct{}, error)
 	UserDataWebsocket(udwr UserDataWebsocketRequest) (chan *AccountEvent, chan struct{}, error)
@@ -84,8 +84,8 @@ type binance struct {
 	Service Service
 }
 
-func (b *binance) SpreadAllWebsocket() (chan *MarkPriceAllStrEvent, chan struct{}, error) {
-	return b.Service.MarkPriceAllStrWebsocket()
+func (b *binance) SpreadAllWebsocket() (chan *SpreadAllEvent, chan struct{}, error) {
+	return b.Service.SpreadAllWebsocket()
 }
 
 // Error represents Binance error structure with error code and message.
@@ -228,6 +228,10 @@ func (b *binance) Trades(atr TradesRequest) ([]*PublicTrade, error) {
 // AggTrades returns compressed/aggregate list of trades.
 func (b *binance) AggTrades(atr AggTradesRequest) ([]*AggTrade, error) {
 	return b.Service.AggTrades(atr)
+}
+
+type SpreadAllEvent struct {
+	Data []byte
 }
 
 type MarkPriceAllStrEvent struct {

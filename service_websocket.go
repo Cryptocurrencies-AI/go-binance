@@ -366,7 +366,7 @@ func (as *apiService) MarkPriceAllStrWebsocket() (chan *MarkPriceAllStrEvent, ch
 	return mpasech, done, nil
 }
 
-func (as *apiService) SpreadAllWebsocket() (chan *MarkPriceAllStrEvent, chan struct{}, error) {
+func (as *apiService) SpreadAllWebsocket() (chan *SpreadAllEvent, chan struct{}, error) {
 	url := fmt.Sprintf("wss://fstream.binance.com/ws/!bookTicker")
 	c, _, err := websocket.DefaultDialer.Dial(url, nil)
 	if err != nil {
@@ -374,7 +374,7 @@ func (as *apiService) SpreadAllWebsocket() (chan *MarkPriceAllStrEvent, chan str
 	}
 
 	done := make(chan struct{})
-	mpasech := make(chan *MarkPriceAllStrEvent)
+	mpasech := make(chan *SpreadAllEvent)
 
 	go func() {
 		defer c.Close()
@@ -390,7 +390,7 @@ func (as *apiService) SpreadAllWebsocket() (chan *MarkPriceAllStrEvent, chan str
 					level.Error(as.Logger).Log("wsRead", err)
 					return
 				}
-				mpase := &MarkPriceAllStrEvent{
+				mpase := &SpreadAllEvent{
 					Data: message,
 				}
 				mpasech <- mpase
