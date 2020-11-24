@@ -26,6 +26,8 @@ type Binance interface {
 	Trades(req TradesRequest) ([]*PublicTrade, error)
 	// AggTrades returns compressed/aggregate list of trades.
 	AggTrades(atr AggTradesRequest) ([]*AggTrade, error)
+  // MarkPriceAllStr returns string with JSON encoded prices.
+  MarkPriceAllStr() (string, error)
 	// Klines returns klines/candlestick data.
 	Klines(kr KlinesRequest) ([]*Kline, error)
 	// Tickers24 returns all 24hr price change statistics.
@@ -253,6 +255,25 @@ type KlineEvent struct {
 	LastTradeID  int64
 	Final        bool
 	Kline
+}
+
+// No need for it now
+// type MarkPrice struct {
+//   Event string
+//   Time  time.Time
+//   Symbol string
+//   "e": "markPriceUpdate",     // Event type
+//   "E": 1562305380000,         // Event time
+//   "s": "BTCUSDT",             // Symbol
+//   "p": "11185.87786614",      // Mark price
+//   "i": "11784.62659091"       // Index price
+//   "r": "0.00030000",          // Funding rate
+//   "T": 1562306400000          // Next funding time
+// }
+
+// MarkPriceAllStr returns string with JSON encoded prices.
+func (b *binance) MarkPriceAllStr() (string, error) {
+  return b.Service.MarkPriceAllStr()
 }
 
 // Klines returns klines/candlestick data.

@@ -288,6 +288,11 @@ func (as *apiService) AggTrades(atr AggTradesRequest) ([]*AggTrade, error) {
 	return aggTrades, nil
 }
 
+func (as *apiService) MarkPirceAllStr() (string, error) {
+  out := "{}"
+  return out
+}
+
 func (as *apiService) Klines(kr KlinesRequest) ([]*Kline, error) {
 	params := make(map[string]string)
 	params["symbol"] = kr.Symbol
