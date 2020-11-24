@@ -84,6 +84,10 @@ type binance struct {
 	Service Service
 }
 
+func (b *binance) SpreadAllWebsocket() (chan *MarkPriceAllStrEvent, chan struct{}, error) {
+	return b.Service.MarkPriceAllStrWebsocket()
+}
+
 // Error represents Binance error structure with error code and message.
 type Error struct {
 	Code    int    `json:"code"`
