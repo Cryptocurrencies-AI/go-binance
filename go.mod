@@ -1,4 +1,4 @@
-module github.com/theMattCode/go-binance
+module github.com/Cryptocurrencies-AI/go-binance
 
 go 1.12
 
