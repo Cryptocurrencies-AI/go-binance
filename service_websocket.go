@@ -331,7 +331,7 @@ func (as *apiService) DepthWebsocket(dwr DepthWebsocketRequest) (chan *DepthEven
 }
 
 func (as *apiService) MarkPriceAllStrWebsocket() (chan *MarkPriceAllStrEvent, chan struct{}, error) {
-	url := fmt.Sprintf("wss://stream.binance.com:9443/ws/!markPrice@arr@1s")
+	url := fmt.Sprintf("wss://fstream.binance.com/ws/!markPrice@arr@1s")
 	c, _, err := websocket.DefaultDialer.Dial(url, nil)
 	if err != nil {
 		return nil, nil, err
