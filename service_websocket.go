@@ -330,6 +330,9 @@ func (as *apiService) DepthWebsocket(dwr DepthWebsocketRequest) (chan *DepthEven
 	return dech, done, nil
 }
 
+func (as *apiService) MarkPriceAll() (chan *MarkPriceAllEvent, chan struct{}, error) {
+}
+
 func (as *apiService) KlineWebsocket(kwr KlineWebsocketRequest) (chan *KlineEvent, chan struct{}, error) {
 	url := fmt.Sprintf("wss://stream.binance.com:9443/ws/%s@kline_%s", strings.ToLower(kwr.Symbol), string(kwr.Interval))
 	c, _, err := websocket.DefaultDialer.Dial(url, nil)

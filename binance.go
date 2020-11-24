@@ -72,6 +72,7 @@ type Binance interface {
 
 	Tickers24Websocket() (chan *Tickers24Event, chan struct{}, error)
 	DepthWebsocket(dwr DepthWebsocketRequest) (chan *DepthEvent, chan struct{}, error)
+  MarkPriceAllStrWebsocket() (chan *MarkPriceAllStrEvent, chan struct{}, error)
 	KlineWebsocket(kwr KlineWebsocketRequest) (chan *KlineEvent, chan struct{}, error)
 	TradeWebsocket(twr TradeWebsocketRequest) (chan *AggTradeEvent, chan struct{}, error)
 	UserDataWebsocket(udwr UserDataWebsocketRequest) (chan *AccountEvent, chan struct{}, error)
@@ -222,6 +223,11 @@ func (b *binance) Trades(atr TradesRequest) ([]*PublicTrade, error) {
 // AggTrades returns compressed/aggregate list of trades.
 func (b *binance) AggTrades(atr AggTradesRequest) ([]*AggTrade, error) {
 	return b.Service.AggTrades(atr)
+}
+
+type MarkPriceAllStrEvent struct {
+  WSEvent
+  Interval Interval
 }
 
 // KlinesRequest represents Klines request data.
@@ -656,6 +662,10 @@ type DepthWebsocketRequest struct {
 
 func (b *binance) DepthWebsocket(dwr DepthWebsocketRequest) (chan *DepthEvent, chan struct{}, error) {
 	return b.Service.DepthWebsocket(dwr)
+}
+
+func (b *binance) MarkPriceAllStrWebsocket() (chan *MarkPriceAllStrEvent, chan struct{}, error) {
+	return b.Service.MarkPriceAllStrWebsocket()
 }
 
 type KlineWebsocketRequest struct {
