@@ -288,7 +288,7 @@ func (as *apiService) AggTrades(atr AggTradesRequest) ([]*AggTrade, error) {
 	return aggTrades, nil
 }
 
-func (as *apiService) MarkPirceAllStr() (string, error) {
+func (as *apiService) MarkPriceAllStr() (string, error) {
   out := "{}"
   return out
 }
