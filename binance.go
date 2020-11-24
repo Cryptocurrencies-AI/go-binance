@@ -226,7 +226,7 @@ func (b *binance) AggTrades(atr AggTradesRequest) ([]*AggTrade, error) {
 }
 
 type MarkPriceAllStrEvent struct {
-	Data string
+	Data []byte
 }
 
 // KlinesRequest represents Klines request data.
