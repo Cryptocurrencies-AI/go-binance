@@ -349,7 +349,8 @@ func (as *apiService) MarkPriceAllStrWebsocket() (chan *MarkPriceAllStrEvent, ch
 				level.Info(as.Logger).Log("closing reader")
 				return
 			default:
-				_, message, err := c.ReadMessage() // guess message is bytes, maybe ReadJSON here?
+				var message string
+				err := c.ReadJSON(&message)
 				if err != nil {
 					level.Error(as.Logger).Log("wsRead", err)
 					return
