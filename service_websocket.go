@@ -330,15 +330,14 @@ func (as *apiService) DepthWebsocket(dwr DepthWebsocketRequest) (chan *DepthEven
 	return dech, done, nil
 }
 
-func (as *apiService) SpotMiniTickerAllStrWebsocket() (chan *SpotMiniTickerAllStrEvent, chan struct{}, error) {
-	url := "wss://stream.binance.com:9443/ws/!miniTicker@arr"
+func (as *apiService) allMarketMiniTickersStreamWebsocket(url string) (chan *RawEvent, chan struct{}, error) {
 	c, _, err := websocket.DefaultDialer.Dial(url, nil)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	done := make(chan struct{})
-	mpasech := make(chan *SpotMiniTickerAllStrEvent)
+	mpasech := make(chan *RawEvent)
 
 	go func() {
 		defer c.Close()
@@ -354,7 +353,7 @@ func (as *apiService) SpotMiniTickerAllStrWebsocket() (chan *SpotMiniTickerAllSt
 					level.Error(as.Logger).Log("wsRead", err)
 					return
 				}
-				mpase := &SpotMiniTickerAllStrEvent{
+				mpase := &RawEvent{
 					Data: message,
 				}
 				mpasech <- mpase
@@ -364,6 +363,16 @@ func (as *apiService) SpotMiniTickerAllStrWebsocket() (chan *SpotMiniTickerAllSt
 
 	go as.exitHandler(c, done)
 	return mpasech, done, nil
+}
+
+func (as *apiService) SpotAllMarketMiniTickersStreamWebsocket() (chan *RawEvent, chan struct{}, error) {
+	url := "wss://stream.binance.com:9443/ws/!miniTicker@arr"
+	return as.allMarketMiniTickersStreamWebsocket(url)
+}
+
+func (as *apiService) FuturesAllMarketMiniTickersStreamWebsocket() (chan *RawEvent, chan struct{}, error) {
+	url := "wss://fstream.binance.com/ws/!miniTicker@arr"
+	return as.allMarketMiniTickersStreamWebsocket(url)
 }
 
 func (as *apiService) MarkPriceAllStrWebsocket() (chan *MarkPriceAllStrEvent, chan struct{}, error) {

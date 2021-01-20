@@ -48,7 +48,8 @@ type Service interface {
 
 	Tickers24Websocket() (chan *Tickers24Event, chan struct{}, error)
 	DepthWebsocket(dwr DepthWebsocketRequest) (chan *DepthEvent, chan struct{}, error)
-	SpotMiniTickerAllStrWebsocket() (chan *SpotMiniTickerAllStrEvent, chan struct{}, error)
+	SpotAllMarketMiniTickersStreamWebsocket() (chan *RawEvent, chan struct{}, error)
+	FuturesAllMarketMiniTickersStreamWebsocket() (chan *RawEvent, chan struct{}, error)
 	MarkPriceAllStrWebsocket() (chan *MarkPriceAllStrEvent, chan struct{}, error)
 	SpreadAllWebsocket() (chan *SpreadAllEvent, chan struct{}, error)
 	KlineWebsocket(kwr KlineWebsocketRequest) (chan *KlineEvent, chan struct{}, error)
