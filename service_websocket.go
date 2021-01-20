@@ -330,6 +330,42 @@ func (as *apiService) DepthWebsocket(dwr DepthWebsocketRequest) (chan *DepthEven
 	return dech, done, nil
 }
 
+func (as *apiService) SpotMiniTickerAllStrWebsocket() (chan *SpotMiniTickerAllStrEvent, chan struct{}, error) {
+	url := "wss://stream.binance.com:9443/ws/!miniTicker@arr"
+	c, _, err := websocket.DefaultDialer.Dial(url, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	done := make(chan struct{})
+	mpasech := make(chan *SpotMiniTickerAllStrEvent)
+
+	go func() {
+		defer c.Close()
+		defer close(done)
+		for {
+			select {
+			case <-as.Ctx.Done():
+				level.Info(as.Logger).Log("closing reader")
+				return
+			default:
+				_, message, err := c.ReadMessage()
+				if err != nil {
+					level.Error(as.Logger).Log("wsRead", err)
+					return
+				}
+				mpase := &SpotMiniTickerAllStrEvent{
+					Data: message,
+				}
+				mpasech <- mpase
+			}
+		}
+	}()
+
+	go as.exitHandler(c, done)
+	return mpasech, done, nil
+}
+
 func (as *apiService) MarkPriceAllStrWebsocket() (chan *MarkPriceAllStrEvent, chan struct{}, error) {
 	url := fmt.Sprintf("wss://fstream.binance.com/ws/!markPrice@arr@1s")
 	c, _, err := websocket.DefaultDialer.Dial(url, nil)

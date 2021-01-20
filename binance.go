@@ -73,6 +73,7 @@ type Binance interface {
 	Tickers24Websocket() (chan *Tickers24Event, chan struct{}, error)
 	DepthWebsocket(dwr DepthWebsocketRequest) (chan *DepthEvent, chan struct{}, error)
 	MarkPriceAllStrWebsocket() (chan *MarkPriceAllStrEvent, chan struct{}, error)
+	SpotMiniTickerAllStrWebsocket() (chan *SpotMiniTickerAllStrEvent, chan struct{}, error)
 	SpreadAllWebsocket() (chan *SpreadAllEvent, chan struct{}, error)
 	KlineWebsocket(kwr KlineWebsocketRequest) (chan *KlineEvent, chan struct{}, error)
 	TradeWebsocket(twr TradeWebsocketRequest) (chan *AggTradeEvent, chan struct{}, error)
@@ -235,6 +236,10 @@ type SpreadAllEvent struct {
 }
 
 type MarkPriceAllStrEvent struct {
+	Data []byte
+}
+
+type SpotMiniTickerAllStrEvent struct {
 	Data []byte
 }
 
@@ -670,6 +675,10 @@ type DepthWebsocketRequest struct {
 
 func (b *binance) DepthWebsocket(dwr DepthWebsocketRequest) (chan *DepthEvent, chan struct{}, error) {
 	return b.Service.DepthWebsocket(dwr)
+}
+
+func (b *binance) SpotMiniTickerAllStrWebsocket() (chan *SpotMiniTickerAllStrEvent, chan struct{}, error) {
+	return b.Service.SpotMiniTickerAllStrWebsocket()
 }
 
 func (b *binance) MarkPriceAllStrWebsocket() (chan *MarkPriceAllStrEvent, chan struct{}, error) {
