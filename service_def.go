@@ -50,7 +50,7 @@ type Service interface {
 	DepthWebsocket(dwr DepthWebsocketRequest) (chan *DepthEvent, chan struct{}, error)
 	SpotAllMarketMiniTickersStreamWebsocket() (chan *RawEvent, chan struct{}, error)
 	FuturesAllMarketMiniTickersStreamWebsocket() (chan *RawEvent, chan struct{}, error)
-	MarkPriceAllStrWebsocket() (chan *MarkPriceAllStrEvent, chan struct{}, error)
+	MarkPriceStreamAllMarketWebsocket() (chan *RawEvent, chan struct{}, error)
 	SpreadAllWebsocket() (chan *SpreadAllEvent, chan struct{}, error)
 	KlineWebsocket(kwr KlineWebsocketRequest) (chan *KlineEvent, chan struct{}, error)
 	TradeWebsocket(twr TradeWebsocketRequest) (chan *AggTradeEvent, chan struct{}, error)

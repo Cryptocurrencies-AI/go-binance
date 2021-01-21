@@ -375,7 +375,7 @@ func (as *apiService) FuturesAllMarketMiniTickersStreamWebsocket() (chan *RawEve
 	return as.allMarketMiniTickersStreamWebsocket(url)
 }
 
-func (as *apiService) MarkPriceAllStrWebsocket() (chan *MarkPriceAllStrEvent, chan struct{}, error) {
+func (as *apiService) MarkPriceStreamAllMarketWebsocket() (chan *RawEvent, chan struct{}, error) {
 	url := fmt.Sprintf("wss://fstream.binance.com/ws/!markPrice@arr@1s")
 	c, _, err := websocket.DefaultDialer.Dial(url, nil)
 	if err != nil {
@@ -383,7 +383,7 @@ func (as *apiService) MarkPriceAllStrWebsocket() (chan *MarkPriceAllStrEvent, ch
 	}
 
 	done := make(chan struct{})
-	mpasech := make(chan *MarkPriceAllStrEvent)
+	mpasech := make(chan *RawEvent)
 
 	go func() {
 		defer c.Close()
@@ -399,7 +399,7 @@ func (as *apiService) MarkPriceAllStrWebsocket() (chan *MarkPriceAllStrEvent, ch
 					level.Error(as.Logger).Log("wsRead", err)
 					return
 				}
-				mpase := &MarkPriceAllStrEvent{
+				mpase := &RawEvent{
 					Data: message,
 				}
 				mpasech <- mpase

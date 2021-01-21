@@ -72,7 +72,7 @@ type Binance interface {
 
 	Tickers24Websocket() (chan *Tickers24Event, chan struct{}, error)
 	DepthWebsocket(dwr DepthWebsocketRequest) (chan *DepthEvent, chan struct{}, error)
-	MarkPriceAllStrWebsocket() (chan *MarkPriceAllStrEvent, chan struct{}, error)
+	MarkPriceStreamAllMarketWebsocket() (chan *RawEvent, chan struct{}, error)
 	SpotAllMarketMiniTickersStreamWebsocket() (chan *RawEvent, chan struct{}, error)
 	FuturesAllMarketMiniTickersStreamWebsocket() (chan *RawEvent, chan struct{}, error)
 	SpreadAllWebsocket() (chan *SpreadAllEvent, chan struct{}, error)
@@ -686,8 +686,8 @@ func (b *binance) FuturesAllMarketMiniTickersStreamWebsocket() (chan *RawEvent, 
 	return b.Service.FuturesAllMarketMiniTickersStreamWebsocket()
 }
 
-func (b *binance) MarkPriceAllStrWebsocket() (chan *MarkPriceAllStrEvent, chan struct{}, error) {
-	return b.Service.MarkPriceAllStrWebsocket()
+func (b *binance) MarkPriceStreamAllMarketWebsocket() (chan *RawEvent, chan struct{}, error) {
+	return b.Service.MarkPriceStreamAllMarketWebsocket()
 }
 
 type KlineWebsocketRequest struct {
